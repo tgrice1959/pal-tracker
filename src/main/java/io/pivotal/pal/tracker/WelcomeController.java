@@ -6,17 +6,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class WelcomeController<value> {
+public class WelcomeController {
 
     @Value("${greeting:Hello}")
     private String greeting;
 
-    public WelcomeController(String a_welcome_message) {
-        this.greeting = a_welcome_message;
+
+    private final String welcomeMsg;
+
+
+    public WelcomeController(@Value("${WELCOME_MESSAGE:Hello}") String a_welcome_message, @Value("${greeting:Hello}") String greeting) {
+        this.welcomeMsg = a_welcome_message;
+        this.greeting = greeting;
     }
 
     @GetMapping("/hello")
     public String sayHello(@RequestParam("name") String  name) {
         return String.format("%s %s", greeting, name);
     }
+
+    @GetMapping("/")
+    public String sayWelcome()
+    {
+        return welcomeMsg;
+    }
+
 }

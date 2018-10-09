@@ -9,7 +9,8 @@ public class WelcomeControllerTest {
 
     @Test
     public void itSaysHello() throws Exception {
-        WelcomeController controller = new WelcomeController("A welcome message");
+       // WelcomeController controller = new WelcomeController("A welcome message",greeting:"greeting");
+        WelcomeController controller = new WelcomeController("A Welcome message","A welcome message");
 
         assertThat(controller.sayHello("Pallavi")).isEqualTo("A welcome message Pallavi");
     }
