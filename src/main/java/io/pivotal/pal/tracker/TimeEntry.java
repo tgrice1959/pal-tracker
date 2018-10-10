@@ -10,7 +10,7 @@ public class TimeEntry {
     private LocalDate date;
     private int hours;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -50,17 +50,35 @@ public class TimeEntry {
         this.hours = hours;
     }
 
-
-    public TimeEntry(long l, long l1, LocalDate parse, int i) {
+    public TimeEntry(long id, long projectId, long userId, LocalDate date, int hours) {
+        this.id = id;
+        this.projectId = projectId;
+        this.userId = userId;
+        this.date = date;
+        this.hours = hours;
     }
 
-    public TimeEntry(long l, long l1, long l2, LocalDate parse, int i) {
+    public TimeEntry(long projectId, long userId, LocalDate date, int hours) {
+        this.projectId = projectId;
+        this.userId = userId;
+        this.date = date;
+        this.hours = hours;
     }
 
     public TimeEntry() {
 
     }
 
+    @Override
+    public String toString() {
+        return "TimeEntry{" +
+                "id=" + id +
+                ", projectId=" + projectId +
+                ", userId=" + userId +
+                ", date=" + date +
+                ", hours=" + hours +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

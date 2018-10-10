@@ -1,48 +1,75 @@
 package io.pivotal.pal.tracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.util.List;
 
 @RestController
+@RequestMapping("/time-entries")
 public class TimeEntryController {
 
     @Autowired
     TimeEntryRepository timeEntryRepository;
 
+
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
+        this.timeEntryRepository = timeEntryRepository;
     }
-    @PostMapping(" /time-entries")
-    public ResponseEntity create(TimeEntry timeEntryToCreate) {
+    @PostMapping
+    public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntryToCreate) {
+        TimeEntry results = timeEntryRepository.create(timeEntryToCreate);
+        if(results != null){
+            return new ResponseEntity<>(results,HttpStatus.CREATED);
+        }else{
+            return null;
+        }
 
       //HashMap timeEntryMap = new HashMap();
 
 
-
 // Add the time Entry to Map
 
-        return new ResponseEntity(timeEntryToCreate , HttpStatus.OK );
     }
 
-    @GetMapping(" /time-entries")
-    public ResponseEntity<TimeEntry> read(long l) {
-        return null;
+    @GetMapping("{l}")
+    public ResponseEntity<TimeEntry> read(@PathVariable long l) {
+        TimeEntry results = timeEntryRepository.find(l);
+        if(results != null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(results, HttpStatus.NOT_FOUND);
+        }
     }
 
+    @GetMapping
     public ResponseEntity<List<TimeEntry>> list() {
-        return null;
+        List<TimeEntry> results = timeEntryRepository.list();
+        if(results != null){
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(results, HttpStatus.NOT_FOUND);
+        }
     }
 
-    public ResponseEntity update(long l, TimeEntry expected) {
-        return null;
+    @PutMapping("{l}")
+    public ResponseEntity<TimeEntry> update(@PathVariable long l, @RequestBody TimeEntry expected) {
+        TimeEntry results = timeEntryRepository.update(l, expected);
+        if(results == null){
+            return new ResponseEntity<>(results, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        }
     }
 
-    public ResponseEntity<TimeEntry> delete(long l) {
-        return null;
+    @DeleteMapping("{l}")
+    public ResponseEntity<TimeEntry> delete(@PathVariable long l) {
+        timeEntryRepository.delete(l);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+
     }
 }

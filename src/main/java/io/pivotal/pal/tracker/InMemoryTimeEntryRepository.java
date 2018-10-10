@@ -3,38 +3,50 @@ package io.pivotal.pal.tracker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.util.*;
 
-public class InMemoryTimeEntryRepository implements TimeEntryRepository{
+public class InMemoryTimeEntryRepository implements TimeEntryRepository {
+     HashMap<Long, TimeEntry> map = new HashMap<Long, TimeEntry>();
 
     long idval=1L;
+    long id = 0;
+
     public TimeEntry create(TimeEntry timeEntry) {
-         TimeEntry te =  new TimeEntry(idval,timeEntry.getProjectId(),timeEntry.getUserId(),timeEntry.getDate(),timeEntry.getHours());
-         idval++;
-         return te ;
+        id ++;
+        TimeEntry savedTimeEntry = new TimeEntry(id, timeEntry.getProjectId(), timeEntry.getUserId(), timeEntry.getDate(), timeEntry.getHours());
+        map.put(id, savedTimeEntry);
+        return savedTimeEntry;
+    }
+
+
+    public TimeEntry find(long id) {
+
+        return map.get(id);
+    }
+
+
+    public List<TimeEntry> list() {
+        List<TimeEntry> timeEntries = new ArrayList(map.values());
+        return timeEntries;
+    }
+
+    public TimeEntry update(long id, TimeEntry any) {
+        TimeEntry updateResponse = map.get(id);
+        if (updateResponse == null) {
+            return null;
+        }
+        updateResponse.setDate(any.getDate());
+        updateResponse.setHours(any.getHours());
+        updateResponse.setProjectId(any.getProjectId());
+        updateResponse.setUserId(any.getUserId());
+
+        return updateResponse;
     }
 
     @Override
-    public TimeEntry find(long l) {
-        return new TimeEntry();
-    }
-
-
-    public ResponseEntity<List<TimeEntry>> list() {
-        return null;
-    }
-
-    @Override
-    public TimeEntry update(long eq, TimeEntry any) {
-        any.setId(eq);
-        return any;
-    }
-
-    @Override
-    public ResponseEntity<TimeEntry> delete(long l)
+    public void delete(long l)
     {
-        return new ResponseEntity(new TimeEntry() , HttpStatus.OK );
-
+        map.remove(l);
     }
 
 

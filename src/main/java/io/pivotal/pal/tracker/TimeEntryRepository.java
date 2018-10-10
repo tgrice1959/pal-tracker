@@ -1,11 +1,12 @@
 package io.pivotal.pal.tracker;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TimeEntryRepository {
-
 
 
 
@@ -21,7 +22,7 @@ public interface TimeEntryRepository {
 
 
 
-    public ResponseEntity<List<TimeEntry>> list();
+    public List<TimeEntry> list();
    // {
 
       //  ArrayList<TimeEntry> listofTimeEntries = new ArrayList<TimeEntry>();
@@ -35,7 +36,7 @@ public interface TimeEntryRepository {
     //    return null;
    // }
 
-    public ResponseEntity<TimeEntry> delete(long l);
+    public void delete(long l);
     //{
     //    return null;
     //}
