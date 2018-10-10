@@ -20,6 +20,7 @@ public class TimeEntryController {
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
         this.timeEntryRepository = timeEntryRepository;
     }
+
     @PostMapping
     public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntryToCreate) {
         TimeEntry results = timeEntryRepository.create(timeEntryToCreate);
