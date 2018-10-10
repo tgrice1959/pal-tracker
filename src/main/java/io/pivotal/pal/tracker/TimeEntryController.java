@@ -17,7 +17,7 @@ public class TimeEntryController {
 
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
     }
-    @PostMapping("/")
+    @PostMapping(" /time-entries")
     public ResponseEntity create(TimeEntry timeEntryToCreate) {
 
       //HashMap timeEntryMap = new HashMap();
@@ -29,7 +29,7 @@ public class TimeEntryController {
         return new ResponseEntity(timeEntryToCreate , HttpStatus.OK );
     }
 
-    @GetMapping
+    @GetMapping(" /time-entries")
     public ResponseEntity<TimeEntry> read(long l) {
         return null;
     }

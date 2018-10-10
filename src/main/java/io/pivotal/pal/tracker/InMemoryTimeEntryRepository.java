@@ -1,5 +1,6 @@
 package io.pivotal.pal.tracker;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -25,12 +26,15 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository{
 
     @Override
     public TimeEntry update(long eq, TimeEntry any) {
-        return null;
+        any.setId(eq);
+        return any;
     }
 
     @Override
-    public ResponseEntity<TimeEntry> delete(long l) {
-        return null;
+    public ResponseEntity<TimeEntry> delete(long l)
+    {
+        return new ResponseEntity(new TimeEntry() , HttpStatus.OK );
+
     }
 
 
