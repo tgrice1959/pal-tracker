@@ -94,6 +94,7 @@ public class JdbcTimeEntryRepositoryTest {
         assertThat(timeEntries.size()).isEqualTo(2);
 
         TimeEntry timeEntry = timeEntries.get(0);
+        System.out.println("timeEntry " + timeEntry);
         assertThat(timeEntry.getId()).isEqualTo(888L);
         assertThat(timeEntry.getProjectId()).isEqualTo(456L);
         assertThat(timeEntry.getUserId()).isEqualTo(678L);
@@ -101,6 +102,7 @@ public class JdbcTimeEntryRepositoryTest {
         assertThat(timeEntry.getHours()).isEqualTo(9);
 
         timeEntry = timeEntries.get(1);
+        System.out.println("timeEntry " + timeEntry);
         assertThat(timeEntry.getId()).isEqualTo(999L);
         assertThat(timeEntry.getProjectId()).isEqualTo(123L);
         assertThat(timeEntry.getUserId()).isEqualTo(321L);
